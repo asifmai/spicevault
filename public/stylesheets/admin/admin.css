@@ -38,3 +38,9 @@
 .table-wrapper {
   overflow-x: auto;
 }
+
+@media only screen and (max-width: 992px) {
+  .account-wrap {
+    margin-left: auto;
+  }
+}
