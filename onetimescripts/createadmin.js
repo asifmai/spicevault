@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const db = require('../config/keys').mongoURI;
-const User = require('../models/user');
+const User = require('../models/User');
 const tokenGen = require('../helpers/randomstring');
 
 // DB Config
