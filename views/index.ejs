@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include partials/commonhead %>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+
+<body>
+  <div class="body-wrapper">
+    <div class="body-content">
+      <div class="container">
+        <div class="row">
+          <div class="col text-center">
+            <form action="/search/name" method="GET">
+            <div class="search-box">                
+              <input type="text" name="searchterm" class="search-input" placeholder="What are you looking for?">
+              <i class="fas fa-search"></i>
+            </div>
+            <input type="submit" class="d-none">
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="filters-container">
+              
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <% include partials/commonscripts %>
+
+  <script>
+    $('.fas.fa-search').click(function (e) { 
+      e.preventDefault();
+      $('input[type="submit"]').trigger('click');
+    });
+  </script>
+</body>
+
+</html>

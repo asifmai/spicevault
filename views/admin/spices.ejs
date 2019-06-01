@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partials/commonhead %>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <% include partials/headermobile %>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <% include partials/sidebar %>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <% include partials/headerdesktop %>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">Herbs & Spices</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <% include ../partials/messages %>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col text-right">
+                                <a href="/admin/addspice" class="btn btn-primary">Add Spice</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-wrapper">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Image</th>
+                                                        <th>Description</th>
+                                                        <th>Blends</th>
+                                                        <th>Flavors</th>
+                                                        <th>Ingredients</th>
+                                                        <th>Regions</th>
+                                                        <th>Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% for (var i = 0; i < spices.length; i++) { %>
+                                                    <tr>
+                                                        <td scope="row"><%= i + 1 %></td>
+                                                        <td><%= spices[i].name %></td>
+                                                        <td>
+                                                            <img src="/images/spices/<%= spices[i].image %>" alt="" style="width: 150px;">
+                                                        </td>
+                                                        <td><%= spices[i].description %></td>
+                                                        <td>
+                                                            <% for (var a = 0; a < spices[i].blends.length; a++) { %>
+                                                                <%= spices[i].blends[a].name %> ,
+                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <% for (var a = 0; a < spices[i].flavors.length; a++) { %>
+                                                                <%= spices[i].flavors[a].name %> ,
+                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <% for (var a = 0; a < spices[i].ingredients.length; a++) { %>
+                                                                <%= spices[i].ingredients[a].name %> ,
+                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <% for (var a = 0; a < spices[i].regions.length; a++) { %>
+                                                                <%= spices[i].regions[a].name %> ,
+                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/admin/deletespice/<%= spices[i]._id %>" class="text-danger">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <% include partials/footer %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+    <% include partials/commonscripts %>
+</body>
+
+</html>
