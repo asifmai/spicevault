@@ -62,10 +62,10 @@ module.exports.addspice_post = async (req, res, next) => {
   if (req.body.name.trim() == '') messages.push('New Spice must have a name');
   if (req.body.description.trim() == '') messages.push('New Spice must have a description');
   if (req.body.imageurl.trim() == '' && !req.files) messages.push('New Spice must have an image');
-  if (!req.body.blends) messages.push('New Spice must have Blends');
-  if (!req.body.flavors) messages.push('New Spice must have Flavors');
-  if (!req.body.ingredients) messages.push('New Spice must have Ingredients');
-  if (!req.body.regions) messages.push('New Spice must have Regions');
+  // if (!req.body.blends) messages.push('New Spice must have Blends');
+  // if (!req.body.flavors) messages.push('New Spice must have Flavors');
+  // if (!req.body.ingredients) messages.push('New Spice must have Ingredients');
+  // if (!req.body.regions) messages.push('New Spice must have Regions');
   if (messages.length > 0 ) {
     const blends = await Blend.find().sort({name: 1}).exec();
     const flavors = await Flavor.find().sort({name: 1}).exec();
@@ -75,10 +75,10 @@ module.exports.addspice_post = async (req, res, next) => {
   } else {
     nSpice.name = req.body.name.trim();
     nSpice.description = req.body.description.trim();
-    nSpice.blends = Array.isArray(req.body.blends) ? req.body.blends : [req.body.blends]
-    nSpice.flavors = Array.isArray(req.body.flavors) ? req.body.flavors : [req.body.flavors]
-    nSpice.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : [req.body.ingredients]
-    nSpice.regions = Array.isArray(req.body.regions) ? req.body.regions : [req.body.regions]
+    if (req.body.blends) nSpice.blends = Array.isArray(req.body.blends) ? req.body.blends : [req.body.blends]
+    if (req.body.flavors) nSpice.flavors = Array.isArray(req.body.flavors) ? req.body.flavors : [req.body.flavors]
+    if (req.body.ingredients) nSpice.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : [req.body.ingredients]
+    if (req.body.regions) nSpice.regions = Array.isArray(req.body.regions) ? req.body.regions : [req.body.regions]
     const newSpice = new Spice(nSpice);
     const createdSpice = await newSpice.save();
     console.log(createdSpice);
@@ -116,6 +116,70 @@ module.exports.deletespice_get = async (req, res, next) => {
   res.redirect('/admin/spices');
 }
 
+// Show Edit spice Page
+module.exports.editspice_get = async (req, res, next) => {
+  const spice = await Spice.findById(req.params.spiceid);
+  const blends = await Blend.find().sort({name: 1}).exec();
+  const flavors = await Flavor.find().sort({name: 1}).exec();
+  const ingredients = await Ingredient.find().sort({name: 1}).exec();
+  const regions = await Region.find().sort({name: 1}).exec();
+  res.render('admin/editspice', {spice, blends, flavors, ingredients, regions});
+};
+
+// Edit spice
+module.exports.editspice_post = async (req, res, next) => {
+  console.log(req.body);
+  let messages = [];
+  let nSpice = {};
+  const spiceid = req.body.spiceid;
+  const spice = await Spice.findById(spiceid);
+  if (req.body.name.trim() == '') messages.push('Spice must have a name');
+  if (req.body.description.trim() == '') messages.push('Spice must have a description');
+  // if (req.body.imageurl.trim() == '' && !req.files) messages.push('Spice must have an image');
+  // if (!req.body.blends) messages.push('New Spice must have Blends');
+  // if (!req.body.flavors) messages.push('New Spice must have Flavors');
+  // if (!req.body.ingredients) messages.push('New Spice must have Ingredients');
+  // if (!req.body.regions) messages.push('New Spice must have Regions');
+  if (messages.length > 0 ) {
+    const blends = await Blend.find().sort({name: 1}).exec();
+    const flavors = await Flavor.find().sort({name: 1}).exec();
+    const ingredients = await Ingredient.find().sort({name: 1}).exec();
+    const regions = await Region.find().sort({name: 1}).exec();
+    res.render('admin/editspice', {spice, blends, flavors, ingredients, regions, messages});
+  } else {
+    nSpice.name = req.body.name.trim();
+    nSpice.description = req.body.description.trim();
+    if (req.body.blends) nSpice.blends = Array.isArray(req.body.blends) ? req.body.blends : [req.body.blends]
+    if (req.body.flavors) nSpice.flavors = Array.isArray(req.body.flavors) ? req.body.flavors : [req.body.flavors]
+    if (req.body.ingredients) nSpice.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : [req.body.ingredients]
+    if (req.body.regions) nSpice.regions = Array.isArray(req.body.regions) ? req.body.regions : [req.body.regions]
+    const newSpice = new Spice(nSpice);
+    const createdSpice = await Spice.findByIdAndUpdate(req.body.spiceid, nSpice);
+    console.log(createdSpice);
+    let imageField = '';
+    if (req.files || req.body.imageurl !== '') {
+      fs.unlinkSync(path.resolve(__dirname, `../public/images/spices/${spice.image}`));
+      if (req.files) {
+        const extentionArray = req.files.image.name.split('.');
+        const extension = extentionArray[extentionArray.length - 1];
+        const imgPath = path.resolve(__dirname, `../public/images/spices/${spiceid}.${extension}`);
+        const file_img = req.files.image;
+        file_img.mv(imgPath, (err => console.log(err)));
+        imageField = `${spiceid}.${extension}`
+      } else {
+        const extentionArray = req.body.imageurl.split('.');
+        const extension = extentionArray[extentionArray.length - 1];
+        const imgPath = path.resolve(__dirname, `../public/images/spices/${spiceid}.${extension}`);
+        await imgdownload({url: req.body.imageurl, dest: imgPath});
+        imageField = `${spiceid}.${extension}`
+      }
+      await Spice.findByIdAndUpdate(spiceid, {image: imageField});
+    }
+    req.flash('success_msg', 'Spice Modified Successfully');
+    res.redirect('/admin/spices');
+  }
+};
+
 // Show Blends Page
 module.exports.blends_get = async (req, res, next) => {
   const blends = await Blend.find().sort({name: 1}).exec();
@@ -146,6 +210,29 @@ module.exports.deleteblend_get = async (req, res, next) => {
   res.redirect('/admin/blends');
 };
 
+// Show Edit Blend Page
+module.exports.editblend_get = async (req, res, next) => {
+  const blend = await Blend.findById(req.params.blendid);
+  res.render('admin/editblend', {blend});
+};
+
+// Edit Blend
+module.exports.editblend_post = async (req, res, next) => {
+  const blend = await Blend.findById(req.body.blendid);
+  let messages = [];
+  if (req.body.name.trim() == '') messages.push('Blend must have a name...');
+  if (messages.length > 0) {
+    res.render('admin/editblend', {blend, messages});
+  } else {
+    await Blend.findByIdAndUpdate(req.body.blendid, {
+      name: req.body.name.trim(),
+      description: req.body.description.trim(),
+    });
+    req.flash('success_msg', 'Blend Modified successfully...')
+    res.redirect('/admin/blends');
+  }
+};
+
 // Show Flavors Page
 module.exports.flavors_get = async (req, res, next) => {
   const flavors = await Flavor.find().sort({name: 1}).exec();
@@ -169,11 +256,34 @@ module.exports.addflavor_post = async (req, res, next) => {
   }
 };
 
-// Delete Blend
+// Delete Flavor
 module.exports.deleteflavor_get = async (req, res, next) => {
   await Flavor.findByIdAndDelete(req.params.flavorid);
   req.flash('success_msg', 'Flavor Deleted');
   res.redirect('/admin/flavors');
+};
+
+// Show Edit Flavor Page
+module.exports.editflavor_get = async (req, res, next) => {
+  const flavor = await Flavor.findById(req.params.flavorid);
+  res.render('admin/editflavor', {flavor});
+};
+
+// Edit Flavor
+module.exports.editflavor_post = async (req, res, next) => {
+  const flavor = await Flavor.findById(req.body.flavorid);
+  let messages = [];
+  if (req.body.name.trim() == '') messages.push('Flavor must have a name...');
+  if (messages.length > 0) {
+    res.render('admin/editflavor', {flavor, messages});
+  } else {
+    await Flavor.findByIdAndUpdate(req.body.flavorid, {
+      name: req.body.name.trim(),
+      description: req.body.description.trim(),
+    });
+    req.flash('success_msg', 'Flavor Modified successfully...')
+    res.redirect('/admin/flavors');
+  }
 };
 
 // Show Ingredients Page
@@ -206,6 +316,29 @@ module.exports.deleteingredient_get = async (req, res, next) => {
   res.redirect('/admin/ingredients');
 };
 
+// Show Edit ingredient Page
+module.exports.editingredient_get = async (req, res, next) => {
+  const ingredient = await Ingredient.findById(req.params.ingredientid);
+  res.render('admin/editingredient', {ingredient});
+};
+
+// Edit ingredient
+module.exports.editingredient_post = async (req, res, next) => {
+  const ingredient = await Ingredient.findById(req.body.ingredientid);
+  let messages = [];
+  if (req.body.name.trim() == '') messages.push('Ingredient must have a name...');
+  if (messages.length > 0) {
+    res.render('admin/editingredient', {ingredient, messages});
+  } else {
+    await Ingredient.findByIdAndUpdate(req.body.ingredientid, {
+      name: req.body.name.trim(),
+      description: req.body.description.trim(),
+    });
+    req.flash('success_msg', 'Ingredient Modified successfully...')
+    res.redirect('/admin/ingredients');
+  }
+};
+
 // Show Regions Page
 module.exports.regions_get = async (req, res, next) => {
   const regions = await Region.find().sort({name: 1}).exec();
@@ -234,4 +367,27 @@ module.exports.deleteregion_get = async (req, res, next) => {
   await Region.findByIdAndDelete(req.params.regionid);
   req.flash('success_msg', 'Region Deleted');
   res.redirect('/admin/regions');
+};
+
+// Show Edit region Page
+module.exports.editregion_get = async (req, res, next) => {
+  const region = await Region.findById(req.params.regionid);
+  res.render('admin/editregion', {region});
+};
+
+// Edit region
+module.exports.editregion_post = async (req, res, next) => {
+  const region = await Region.findById(req.body.regionid);
+  let messages = [];
+  if (req.body.name.trim() == '') messages.push('Region must have a name...');
+  if (messages.length > 0) {
+    res.render('admin/editregion', {region, messages});
+  } else {
+    await Region.findByIdAndUpdate(req.body.regionid, {
+      name: req.body.name.trim(),
+      description: req.body.description.trim(),
+    });
+    req.flash('success_msg', 'Region Modified successfully...')
+    res.redirect('/admin/regions');
+  }
 };

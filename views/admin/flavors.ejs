@@ -91,6 +91,7 @@
                                                         <th>#</th>
                                                         <th>Name</th>
                                                         <th>Description</th>
+                                                        <th>Edit</th>
                                                         <th>Delete</th>
                                                     </tr>
                                                 </thead>
@@ -100,6 +101,11 @@
                                                         <td scope="row"><%= i + 1 %></td>
                                                         <td><%= flavors[i].name %></td>
                                                         <td><%= flavors[i].description %></td>
+                                                        <td>
+                                                            <a href="/admin/editflavor/<%= flavors[i]._id %>" class="text-primary">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                        </td>
                                                         <td>
                                                             <a href="/admin/deleteflavor/<%= flavors[i]._id %>" class="text-danger">
                                                                 <i class="fas fa-trash"></i>

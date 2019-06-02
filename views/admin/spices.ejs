@@ -58,6 +58,7 @@
                                                         <th>Flavors</th>
                                                         <th>Ingredients</th>
                                                         <th>Regions</th>
+                                                        <th>Edit</th>
                                                         <th>Delete</th>
                                                     </tr>
                                                 </thead>
@@ -89,6 +90,11 @@
                                                             <% for (var a = 0; a < spices[i].regions.length; a++) { %>
                                                                 <%= spices[i].regions[a].name %> ,
                                                             <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/admin/editspice/<%= spices[i]._id %>" class="text-primary">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
                                                         </td>
                                                         <td>
                                                             <a href="/admin/deletespice/<%= spices[i]._id %>" class="text-danger">

@@ -29,6 +29,12 @@ router.post('/addspice', auth.ensureAuthenticatedAdmin, adminController.addspice
 /* GET - Private - Delete Spice. */
 router.get('/deletespice/:spiceid', auth.ensureAuthenticatedAdmin, adminController.deletespice_get)
 
+/* GET - Private - Show Edit spice Page. */
+router.get('/editspice/:spiceid', auth.ensureAuthenticatedAdmin, adminController.editspice_get)
+
+/* POST - Private - Edit spice */
+router.post('/editspice', auth.ensureAuthenticatedAdmin, adminController.editspice_post)
+
 /* GET - Private - Show Blends Page. */
 router.get('/blends', auth.ensureAuthenticatedAdmin, adminController.blends_get)
 
@@ -37,6 +43,12 @@ router.post('/addblend', auth.ensureAuthenticatedAdmin, adminController.addblend
 
 /* GET - Private - Delete Blend. */
 router.get('/deleteblend/:blendid', auth.ensureAuthenticatedAdmin, adminController.deleteblend_get)
+
+/* GET - Private - Show Edit Blend Page. */
+router.get('/editblend/:blendid', auth.ensureAuthenticatedAdmin, adminController.editblend_get)
+
+/* POST - Private - Edit Blend */
+router.post('/editblend', auth.ensureAuthenticatedAdmin, adminController.editblend_post)
 
 /* GET - Private - Show Flavors Page. */
 router.get('/flavors', auth.ensureAuthenticatedAdmin, adminController.flavors_get)
@@ -47,6 +59,12 @@ router.post('/addflavor', auth.ensureAuthenticatedAdmin, adminController.addflav
 /* GET - Private - Delete Flavor. */
 router.get('/deleteflavor/:flavorid', auth.ensureAuthenticatedAdmin, adminController.deleteflavor_get)
 
+/* GET - Private - Show Edit Flavor Page. */
+router.get('/editflavor/:flavorid', auth.ensureAuthenticatedAdmin, adminController.editflavor_get)
+
+/* POST - Private - Edit Flavor */
+router.post('/editflavor', auth.ensureAuthenticatedAdmin, adminController.editflavor_post)
+
 /* GET - Private - Show Ingredients Page. */
 router.get('/ingredients', auth.ensureAuthenticatedAdmin, adminController.ingredients_get)
 
@@ -56,6 +74,12 @@ router.post('/addingredient', auth.ensureAuthenticatedAdmin, adminController.add
 /* GET - Private - Delete Ingredient. */
 router.get('/deleteingredient/:ingredientid', auth.ensureAuthenticatedAdmin, adminController.deleteingredient_get)
 
+/* GET - Private - Show Edit ingredient Page. */
+router.get('/editingredient/:ingredientid', auth.ensureAuthenticatedAdmin, adminController.editingredient_get)
+
+/* POST - Private - Edit ingredient */
+router.post('/editingredient', auth.ensureAuthenticatedAdmin, adminController.editingredient_post)
+
 /* GET - Private - Show Regions Page. */
 router.get('/regions', auth.ensureAuthenticatedAdmin, adminController.regions_get)
 
@@ -64,6 +88,12 @@ router.post('/addregion', auth.ensureAuthenticatedAdmin, adminController.addregi
 
 /* GET - Private - Delete Region. */
 router.get('/deleteregion/:regionid', auth.ensureAuthenticatedAdmin, adminController.deleteregion_get)
+
+/* GET - Private - Show Edit region Page. */
+router.get('/editregion/:regionid', auth.ensureAuthenticatedAdmin, adminController.editregion_get)
+
+/* POST - Private - Edit region */
+router.post('/editregion', auth.ensureAuthenticatedAdmin, adminController.editregion_post)
 
 
 module.exports = router;
