@@ -39,4 +39,3 @@ jspm_packages
 .vscode
 .eslintrc.js
 package-lock.json
-public/images/spices/*.*
