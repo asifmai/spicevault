@@ -19,6 +19,7 @@ module.exports.index_get = async (req, res, next) => {
   const flavors = await Flavor.find();
   const ingredients = await Ingredient.find();
   const regions = await Region.find();
+  const allspices = await Spice.find();
 
   if (query.blends !== '') {
     if (Array.isArray(query.blends)) spicesQuery.where({blends: {$all: query.blends}});
@@ -45,5 +46,5 @@ module.exports.index_get = async (req, res, next) => {
   }
   
   const spices = await spicesQuery.sort({name: 'asc'}).exec();
-  res.render('index', {spices, blends, flavors, ingredients, regions, query: req.query});
+  res.render('index', {spices, blends, flavors, ingredients, regions, query: req.query, allspices});
 };

@@ -25,10 +25,13 @@
         <!-- Search Row -->
         <div class="row">
           <div class="col text-center">
-            <div class="ui icon input search-bar">
-              <input type="text" placeholder="Search for Herbs and Spices" name="searchtext" value="<%= query.searchtext ? query.searchtext : ''%>">
-              <i class="search icon"></i>
-            </div>
+              <div class="ui search">
+                <div class="ui icon input">
+                  <input class="prompt" type="text" placeholder="Search for Herbs and Spices..." name="searchtext" value="<%= query.searchtext ? query.searchtext : ''%>">
+                  <i class="search icon"></i>
+                </div>
+                <div class="results"></div>
+              </div>
           </div>
         </div>
         <!-- Search Row Ends -->
@@ -119,6 +122,7 @@
     var ingredients = eval(<%- JSON.stringify(ingredients) %>)
     var regions = eval(<%- JSON.stringify(regions) %>)
     var query = eval(<%- JSON.stringify(query) %>)
+    var allspices = eval(<%- JSON.stringify(allspices) %>)
   </script>
   <script src="/javascripts/index.js"></script>
 </body>

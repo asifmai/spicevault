@@ -5,10 +5,22 @@
   font-weight: 600;
 }
 
-.ui.icon.input.search-bar {
+.ui.search {
   max-width: 350px;
-  margin-top: 0.5em;
   width: 90%;
+  margin: 0.5em auto;
+}
+
+.ui.search .ui.icon.input {
+  width: 100%;
+}
+
+.ui.search .results {
+  width: 100%;
+}
+
+.ui.search .results .result .content .title {
+  text-align: left !important;
 }
 
 .filters__wrapper {
