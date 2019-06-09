@@ -6,7 +6,7 @@ $(document).ready(function () {
   
   $('input#image').change(function () {
     readURL(this);
-  })
+  });
 });
 
 function readURL(input) {
@@ -17,4 +17,4 @@ function readURL(input) {
     }
     reader.readAsDataURL(input.files[0]);
   }
-}
+};

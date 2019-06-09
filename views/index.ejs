@@ -8,39 +8,119 @@
 
 <body>
   <div class="body-wrapper">
-    <div class="body-content">
-      <div class="container">
+    <!-- Top Section Starts -->
+    <div class="container">
+      <!-- Title Row -->
+      <div class="row">
+        <div class="col">
+          <div class="page-header">
+            <h1>Spice Vault</h1>
+          </div>
+        </div>
+      </div>
+      <!-- Title Row Ends -->
+
+      <!-- Form Starts -->
+      <form action="/" method="GET">
+        <!-- Search Row -->
         <div class="row">
           <div class="col text-center">
-            <form action="/search/name" method="GET">
-            <div class="search-box">                
-              <input type="text" name="searchterm" class="search-input" placeholder="What are you looking for?">
-              <i class="fas fa-search"></i>
+            <div class="ui icon input search-bar">
+              <input type="text" placeholder="Search for Herbs and Spices" name="searchtext" value="<%= query.searchtext ? query.searchtext : ''%>">
+              <i class="search icon"></i>
             </div>
-            <input type="submit" class="d-none">
-            </form>
           </div>
         </div>
+        <!-- Search Row Ends -->
 
+        <!-- Filters Row -->
         <div class="row">
           <div class="col">
-            <div class="filters-container">
-              
+            <div class="filters__wrapper">
+              <div class="filter__container">
+                <span class="filter__label">Blends</span>
+                <select class="ui fluid search dropdown filter__select__blends" multiple="" name="blends">
+                  <option value="">All Blends</option>
+                  <% for (var i = 0; i < blends.length; i++) { %>
+                    <option value="<%= blends[i]._id %>"><%= blends[i].name %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="filter__container">
+                <span class="filter__label">Flavors</span>
+                <select class="ui fluid search dropdown filter__select__flavors" multiple="" name="flavors">
+                  <option value="">All Flavors</option>
+                  <% for (var i = 0; i < flavors.length; i++) { %>
+                    <option value="<%= flavors[i]._id %>"><%= flavors[i].name %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="filter__container">
+                <span class="filter__label">Ingredients</span>
+                <select class="ui fluid search dropdown filter__select__ingredients" multiple="" name="ingredients">
+                  <option value="">All Ingredients</option>
+                  <% for (var i = 0; i < ingredients.length; i++) { %>
+                    <option value="<%= ingredients[i]._id %>"><%= ingredients[i].name %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="filter__container">
+                <span class="filter__label">Regions</span>
+                <select class="ui fluid search dropdown filter__select__regions" multiple="" name="regions">
+                  <option value="">All Regions</option>
+                  <% for (var i = 0; i < regions.length; i++) { %>
+                    <option value="<%= regions[i]._id %>"><%= regions[i].name %></option>
+                  <% } %>
+                </select>
+              </div>
             </div>
           </div>
         </div>
+        <!-- Filters Row Ends -->
 
-      </div>
+        <!-- Buttons Row -->
+        <div class="row mt-2">
+          <div class="col text-right">
+            <button class="btn btn-primary btn-sm" type="submit">Apply</button>
+            <button class="btn btn-secondary btn-sm btn-cancel">Reset</button>
+          </div>
+        </div>
+        <!-- Buttons Row Ends -->
+      </form>
+      <!-- Form Ends -->
     </div>
+    <!-- Top Section Ends -->
+    <!-- Glossary Section Starts -->
+    <section id="glossary-section">
+      <div class="container">
+        <div class="glossary__wrapper">
+          <% for (var i = 0; i < spices.length; i++) { %>
+          <div class="glossary__item">
+            <div class="glossary__heading">
+              <a href="" class="text-dark">
+                <%= spices[i].name %>
+              </a>
+            </div>
+            <div class="glossary__content">
+              <p class="text"><%= spices[i].description %><a href="" class="readmore text-primary">Read More...</a></p>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </section>
+    <!-- Glossary Section Ends -->
   </div>
   <% include partials/commonscripts %>
-
   <script>
-    $('.fas.fa-search').click(function (e) { 
-      e.preventDefault();
-      $('input[type="submit"]').trigger('click');
-    });
+    var spices = eval(<%- JSON.stringify(spices) %>)
+    var blends = eval(<%- JSON.stringify(blends) %>)
+    var flavors = eval(<%- JSON.stringify(flavors) %>)
+    var ingredients = eval(<%- JSON.stringify(ingredients) %>)
+    var regions = eval(<%- JSON.stringify(regions) %>)
+    var query = eval(<%- JSON.stringify(query) %>)
   </script>
+  <script src="/javascripts/index.js"></script>
 </body>
 
 </html>
