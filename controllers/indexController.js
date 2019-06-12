@@ -9,7 +9,6 @@ module.exports.index_get = async (req, res, next) => {
   console.log(req.query);
   const query = {}
   query.searchtext = typeof req.query.searchtext != 'undefined' ? req.query.searchtext.trim().toLowerCase() : '';
-  query.blends = typeof req.query.blends != 'undefined' ? req.query.blends : '';
   query.flavors = typeof req.query.flavors != 'undefined' ? req.query.flavors : '';
   query.ingredients = typeof req.query.ingredients != 'undefined' ? req.query.ingredients : '';
   query.regions = typeof req.query.regions != 'undefined' ? req.query.regions : '';
@@ -20,11 +19,6 @@ module.exports.index_get = async (req, res, next) => {
   const ingredients = await Ingredient.find();
   const regions = await Region.find();
   const allspices = await Spice.find();
-
-  if (query.blends !== '') {
-    if (Array.isArray(query.blends)) spicesQuery.where({blends: {$all: query.blends}});
-    else spicesQuery.where({blends: {$in: query.blends}});
-  };
 
   if (query.flavors !== '') {
     if (Array.isArray(query.flavors)) spicesQuery.where({flavors: {$all: query.flavors}});
@@ -51,6 +45,7 @@ module.exports.index_get = async (req, res, next) => {
 
 module.exports.details_get = async (req, res, next) => {
   const spiceid = req.params.spiceid;
-  const spice = await Spice.findById(spiceid);
-  res.render('details', {spice});
+  const spice = await Spice.findById(spiceid).populate('flavors ingredients regions').exec();
+  const blends = await Blend.find().sort({name: 'asc'}).exec();
+  res.render('details', {spice, blends});
 }

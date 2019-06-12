@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include partials/commonhead %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/tooltipster.bundle.min.css" />
+  <link rel="stylesheet" href="/stylesheets/details.css">
+</head>
+
+<body>
+  <div class="body-wrapper">
+    <!-- Top Section Starts -->
+    <div class="container">
+      <!-- Title Row -->
+      <div class="row">
+        <div class="col">
+          <div class="page-header">
+            <a href="/">
+              <h1>Spice Vault</h1>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Title Row Ends -->
+    </div>
+    <!-- Top Section Ends -->
+    
+    <section id="details-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="/images/spices/<%= spice.image %>" alt="<%= spice.name %>" class="img-thumbnail">
+          </div>
+          <div class="col-md-8">
+            <h2 class="spice-name">
+              <%= spice.name %>
+              <span class="spice-type">(<%= spice.type %>)</span>
+            </h2>
+            <p class="para spice-description"><%= spice.description %></p>
+            <h3 class="spice-filters-heading">Filters</h3>
+            <p class="para spice-filters-para">
+              <span class="filter-subheading">Flavors:</span> 
+              <% for (var i = 0; i < spice.flavors.length; i++) { %>
+                <span class="filter-subtext tooltips" title="<%= spice.flavors[i].description %>">
+                  <%= spice.flavors[i].name %>
+                  <%= (i == spice.flavors.length - 1) ? '' : ',' %>
+                </span>
+              <% } %>
+            </p>
+            <p class="para spice-filters-para">
+              <span class="filter-subheading">Ingredients:</span> 
+              <% for (var i = 0; i < spice.ingredients.length; i++) { %>
+                <span class="filter-subtext tooltips" title="<%= spice.ingredients[i].description %>">
+                  <%= spice.ingredients[i].name %>
+                  <%= (i == spice.ingredients.length - 1) ? '' : ',' %>
+                </span>
+              <% } %>
+            </p>
+            <p class="para spice-filters-para">
+              <span class="filter-subheading">Regions:</span> 
+              <% for (var i = 0; i < spice.regions.length; i++) { %>
+                <span class="filter-subtext tooltips" title="<%= spice.regions[i].description %>">
+                  <%= spice.regions[i].name %>
+                  <%= (i == spice.regions.length - 1) ? '' : ',' %>
+                </span>
+              <% } %>
+            </p>
+            <h3 class="spice-filters-heading">Used In</h3>
+            <p class="para spice-filters-para">
+                <span class="filter-subheading">Blends:</span> 
+                <% for (var i = 0; i < blends.length; i++) { %>
+                  <% if (blends[i].spices.includes(spice._id)) { %>
+                  <span class="filter-subtext tooltips" title="<%= blends[i].description %>">
+                    <%= blends[i].name %>
+                  </span>
+                  <% } %>
+                <% } %>
+              </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </div>
+  <% include partials/commonscripts %>
+  <script type="text/javascript" src="/javascripts/tooltipster.bundle.min.js"></script>
+  <script src="/javascripts/details.js"></script>
+</body>
+
+</html>

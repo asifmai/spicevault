@@ -1,0 +1,34 @@
+.page-header h1 {
+  text-align: center;
+  margin-top: 0.5em;
+  font-size: 2.5em;
+  font-weight: 600;
+}
+
+#details-section {
+  margin-top: 2em;
+}
+
+.spice-type {
+  font-size: 0.6em;
+  color: #1e70bf;
+}
+
+.filter-subheading {
+  font-weight: 600;
+  margin-right: 1em;
+}
+
+.filter-subtext {
+  margin-right: 0.5em;
+}
+
+.para {
+  margin-left: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  .spice-name {
+    margin-top: 1em !important;
+  }
+}
