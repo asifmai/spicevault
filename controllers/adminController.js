@@ -31,8 +31,13 @@ module.exports.logout_get = (req, res, next) => {
 };
 
 // Show Admin Dashboard
-module.exports.dashboard_get = (req, res, next) => {
-  res.render('admin/dashboard');
+module.exports.dashboard_get = async (req, res, next) => {
+  const spices = await Spice.find().countDocuments().exec();
+  const blends = await Blend.find().countDocuments().exec();
+  const flavors = await Flavor.find().countDocuments().exec();
+  const ingredients = await Ingredient.find().countDocuments().exec();
+  const regions = await Region.find().countDocuments().exec();
+  res.render('admin/dashboard', {spices, blends, flavors, ingredients, regions});
 };
 
 // Show Spices Page
