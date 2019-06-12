@@ -3,6 +3,8 @@
 
 <head>
     <% include partials/commonhead %>
+    <link rel="stylesheet" href="/admin/css/semantic.min.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
 </head>
 
 <body>
@@ -64,6 +66,20 @@
                                                         class="form-control"></textarea>
                                                 </div>
                                             </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="spices"
+                                                        class=" form-control-label">Spices</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select class="ui fluid search dropdown" multiple="" name="spices" id="spices">
+                                                        <option value="">Spices</option>
+                                                        <% for (var i = 0; i < spices.length; i++) { %>
+                                                            <option value="<%= spices[i]._id %>"><%= spices[i].name %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="card-footer">
                                             <button type="submit" class="btn btn-primary btn-sm">
@@ -91,6 +107,7 @@
                                                         <th>#</th>
                                                         <th>Name</th>
                                                         <th>Description</th>
+                                                        <th>Spices/Herbs</th>
                                                         <th>Edit</th>
                                                         <th>Delete</th>
                                                     </tr>
@@ -101,6 +118,11 @@
                                                         <td scope="row"><%= i + 1 %></td>
                                                         <td><%= blends[i].name %></td>
                                                         <td><%= blends[i].description %></td>
+                                                        <td>
+                                                            <% for (var a = 0; a < blends[i].spices.length; a++) { %>
+                                                                <%= blends[i].spices[a].name %>, 
+                                                            <% } %>
+                                                        </td>
                                                         <td>
                                                             <a href="/admin/editblend/<%= blends[i]._id %>" class="text-primary">
                                                                 <i class="fas fa-edit"></i>
@@ -134,6 +156,8 @@
 
     </div>
     <% include partials/commonscripts %>
+    <script src="/admin/js/semantic.min.js"></script>
+    <script src="/javascripts/admin/blends.js"></script>
 </body>
 
 </html>

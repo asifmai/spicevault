@@ -16,10 +16,7 @@ const SpiceSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  blends: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'blend',
-  }],
+  type: String,
   flavors: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'flavor',

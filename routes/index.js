@@ -10,4 +10,9 @@ const indexController = require('../controllers/indexController');
 // @access  Public
 router.get('/', indexController.index_get);
 
+// @route   GET /
+// @desc    Show Index Page
+// @access  Public
+router.get('/details/:spiceid', indexController.details_get);
+
 module.exports = router;

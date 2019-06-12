@@ -47,11 +47,10 @@ module.exports.spices_get = async (req, res, next) => {
 
 // Show Add Spice Page
 module.exports.addspice_get = async (req, res, next) => {
-  const blends = await Blend.find().sort({name: 1}).exec();
   const flavors = await Flavor.find().sort({name: 1}).exec();
   const ingredients = await Ingredient.find().sort({name: 1}).exec();
   const regions = await Region.find().sort({name: 1}).exec();
-  res.render('admin/addspice', {blends, flavors, ingredients, regions});
+  res.render('admin/addspice', {flavors, ingredients, regions});
 }
 
 // Add Spice
@@ -62,20 +61,17 @@ module.exports.addspice_post = async (req, res, next) => {
   if (req.body.name.trim() == '') messages.push('New Spice must have a name');
   if (req.body.description.trim() == '') messages.push('New Spice must have a description');
   if (req.body.imageurl.trim() == '' && !req.files) messages.push('New Spice must have an image');
-  // if (!req.body.blends) messages.push('New Spice must have Blends');
-  // if (!req.body.flavors) messages.push('New Spice must have Flavors');
-  // if (!req.body.ingredients) messages.push('New Spice must have Ingredients');
-  // if (!req.body.regions) messages.push('New Spice must have Regions');
+  if (req.body.type.trim() == '') messages.push('New Spice must have an Type');
+  
   if (messages.length > 0 ) {
-    const blends = await Blend.find().sort({name: 1}).exec();
     const flavors = await Flavor.find().sort({name: 1}).exec();
     const ingredients = await Ingredient.find().sort({name: 1}).exec();
     const regions = await Region.find().sort({name: 1}).exec();
-    res.render('admin/addspice', {blends, flavors, ingredients, regions, messages});
+    res.render('admin/addspice', {flavors, ingredients, regions, messages});
   } else {
     nSpice.name = req.body.name.trim();
     nSpice.description = req.body.description.trim();
-    if (req.body.blends) nSpice.blends = Array.isArray(req.body.blends) ? req.body.blends : [req.body.blends]
+    nSpice.type = req.body.type.trim();
     if (req.body.flavors) nSpice.flavors = Array.isArray(req.body.flavors) ? req.body.flavors : [req.body.flavors]
     if (req.body.ingredients) nSpice.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : [req.body.ingredients]
     if (req.body.regions) nSpice.regions = Array.isArray(req.body.regions) ? req.body.regions : [req.body.regions]
@@ -119,43 +115,35 @@ module.exports.deletespice_get = async (req, res, next) => {
 // Show Edit spice Page
 module.exports.editspice_get = async (req, res, next) => {
   const spice = await Spice.findById(req.params.spiceid);
-  const blends = await Blend.find().sort({name: 1}).exec();
   const flavors = await Flavor.find().sort({name: 1}).exec();
   const ingredients = await Ingredient.find().sort({name: 1}).exec();
   const regions = await Region.find().sort({name: 1}).exec();
-  res.render('admin/editspice', {spice, blends, flavors, ingredients, regions});
+  res.render('admin/editspice', {spice, flavors, ingredients, regions});
 };
 
 // Edit spice
 module.exports.editspice_post = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   let messages = [];
   let nSpice = {};
   const spiceid = req.body.spiceid;
   const spice = await Spice.findById(spiceid);
   if (req.body.name.trim() == '') messages.push('Spice must have a name');
   if (req.body.description.trim() == '') messages.push('Spice must have a description');
-  // if (req.body.imageurl.trim() == '' && !req.files) messages.push('Spice must have an image');
-  // if (!req.body.blends) messages.push('New Spice must have Blends');
-  // if (!req.body.flavors) messages.push('New Spice must have Flavors');
-  // if (!req.body.ingredients) messages.push('New Spice must have Ingredients');
-  // if (!req.body.regions) messages.push('New Spice must have Regions');
   if (messages.length > 0 ) {
-    const blends = await Blend.find().sort({name: 1}).exec();
     const flavors = await Flavor.find().sort({name: 1}).exec();
     const ingredients = await Ingredient.find().sort({name: 1}).exec();
     const regions = await Region.find().sort({name: 1}).exec();
-    res.render('admin/editspice', {spice, blends, flavors, ingredients, regions, messages});
+    res.render('admin/editspice', {spice, flavors, ingredients, regions, messages});
   } else {
     nSpice.name = req.body.name.trim();
     nSpice.description = req.body.description.trim();
-    if (req.body.blends) nSpice.blends = Array.isArray(req.body.blends) ? req.body.blends : [req.body.blends]
+    nSpice.type = req.body.type.trim();
     if (req.body.flavors) nSpice.flavors = Array.isArray(req.body.flavors) ? req.body.flavors : [req.body.flavors]
     if (req.body.ingredients) nSpice.ingredients = Array.isArray(req.body.ingredients) ? req.body.ingredients : [req.body.ingredients]
     if (req.body.regions) nSpice.regions = Array.isArray(req.body.regions) ? req.body.regions : [req.body.regions]
-    const newSpice = new Spice(nSpice);
     const createdSpice = await Spice.findByIdAndUpdate(req.body.spiceid, nSpice);
-    console.log(createdSpice);
+    // console.log(createdSpice);
     let imageField = '';
     if (req.files || req.body.imageurl !== '') {
       fs.unlinkSync(path.resolve(__dirname, `../public/images/spices/${spice.image}`));
@@ -182,21 +170,24 @@ module.exports.editspice_post = async (req, res, next) => {
 
 // Show Blends Page
 module.exports.blends_get = async (req, res, next) => {
-  const blends = await Blend.find().sort({name: 1}).exec();
-  res.render('admin/blends', {blends});
+  const blends = await Blend.find().populate('spices').sort({name: 1}).exec();
+  const spices = await Spice.find().sort({name: 'asc'}).exec();
+  res.render('admin/blends', {blends, spices});
 };
 
 // Add New Blend
 module.exports.addblend_post = async (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   if (req.body.name.trim() == '') {
     req.flash('error_msg', 'New Blend must have a name')
     res.redirect('/admin/blends');
   } else {
-    const newBlend = new Blend({
+    const nBlend = {
       name: req.body.name.trim(),
       description: req.body.description.trim(),
-    });
+    }
+    if (req.body.spices) nBlend.spices = Array.isArray(req.body.spices) ? req.body.spices : [req.body.spices] 
+    const newBlend = new Blend(nBlend);
     await newBlend.save()
     req.flash('success_msg', 'New Blend Saved')
     res.redirect('/admin/blends');
@@ -213,21 +204,25 @@ module.exports.deleteblend_get = async (req, res, next) => {
 // Show Edit Blend Page
 module.exports.editblend_get = async (req, res, next) => {
   const blend = await Blend.findById(req.params.blendid);
-  res.render('admin/editblend', {blend});
+  const spices = await Spice.find().sort({name: 'asc'});
+  res.render('admin/editblend', {blend, spices});
 };
 
 // Edit Blend
 module.exports.editblend_post = async (req, res, next) => {
   const blend = await Blend.findById(req.body.blendid);
+  const spices = await Spice.find().sort({name: 'asc'});
   let messages = [];
   if (req.body.name.trim() == '') messages.push('Blend must have a name...');
   if (messages.length > 0) {
-    res.render('admin/editblend', {blend, messages});
+    res.render('admin/editblend', {blend, messages, spices});
   } else {
-    await Blend.findByIdAndUpdate(req.body.blendid, {
+    const nBlend = {
       name: req.body.name.trim(),
       description: req.body.description.trim(),
-    });
+    }
+    if (req.body.spices) nBlend.spices = Array.isArray(req.body.spices) ? req.body.spices : [req.body.spices]
+    await Blend.findByIdAndUpdate(req.body.blendid, nBlend);
     req.flash('success_msg', 'Blend Modified successfully...')
     res.redirect('/admin/blends');
   }

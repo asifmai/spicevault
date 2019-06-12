@@ -1,11 +1,15 @@
 $(document).ready(function () {
-  $('#blends.ui.dropdown').dropdown('set selected', spice.blends);
   $('#flavors.ui.dropdown').dropdown('set selected', spice.flavors);
   $('#ingredients.ui.dropdown').dropdown('set selected', spice.ingredients);
   $('#regions.ui.dropdown').dropdown('set selected', spice.blends);
   
   $('input#image').change(function () {
     readURL(this);
+  });
+
+  $('.btn-cancel').click(function (e) { 
+    e.preventDefault();
+    window.location.href = '/admin/spices'
   });
 });
 

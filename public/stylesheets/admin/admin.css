@@ -39,6 +39,14 @@
   overflow-x: auto;
 }
 
+.form-control:focus {
+  box-shadow: none;
+}
+
+.btn:focus, .btn:active {
+  box-shadow: none;
+}
+
 @media only screen and (max-width: 992px) {
   .account-wrap {
     margin-left: auto;

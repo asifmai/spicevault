@@ -3,6 +3,8 @@
 
 <head>
     <% include partials/commonhead %>
+    <link rel="stylesheet" href="/admin/css/semantic.min.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/components/icon.min.css'>
 </head>
 
 <body>
@@ -62,6 +64,20 @@
                                                         class="form-control"><%= blend.description %></textarea>
                                                 </div>
                                             </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="spices"
+                                                        class=" form-control-label">Spices</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <select class="ui fluid search dropdown" multiple="" name="spices" id="spices">
+                                                        <option value="">Spices</option>
+                                                        <% for (var i = 0; i < spices.length; i++) { %>
+                                                            <option value="<%= spices[i]._id %>"><%= spices[i].name %></option>
+                                                        <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="card-footer">
                                             <button type="submit" class="btn btn-primary btn-sm">
@@ -89,12 +105,11 @@
 
     </div>
     <% include partials/commonscripts %>
+    <script src="/admin/js/semantic.min.js"></script>
     <script>
-        $('.btn-cancel').click(function (e) { 
-            e.preventDefault();
-            window.location.href = '/admin/blends'
-        });
+        var blend = eval(<%- JSON.stringify(blend) %>)
     </script>
+    <script src="/javascripts/admin/editblend.js"></script>
 </body>
 
 </html>

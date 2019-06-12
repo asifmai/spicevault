@@ -40,7 +40,7 @@
         <div class="row">
           <div class="col">
             <div class="filters__wrapper">
-              <div class="filter__container">
+              <!-- <div class="filter__container">
                 <span class="filter__label">Blends</span>
                 <select class="ui fluid search dropdown filter__select__blends" multiple="" name="blends">
                   <option value="">All Blends</option>
@@ -48,7 +48,7 @@
                     <option value="<%= blends[i]._id %>"><%= blends[i].name %></option>
                   <% } %>
                 </select>
-              </div>
+              </div> -->
               <div class="filter__container">
                 <span class="filter__label">Flavors</span>
                 <select class="ui fluid search dropdown filter__select__flavors" multiple="" name="flavors">
@@ -100,12 +100,12 @@
           <% for (var i = 0; i < spices.length; i++) { %>
           <div class="glossary__item">
             <div class="glossary__heading">
-              <a href="" class="text-dark">
+              <a href="/details/<%= spices[i]._id %>" class="text-dark">
                 <%= spices[i].name %>
               </a>
             </div>
             <div class="glossary__content">
-              <p class="text"><%= spices[i].description %><a href="" class="readmore text-primary">Read More...</a></p>
+              <p class="text"><%= spices[i].description %><a href="/details/<%= spices[i]._id %>" class="readmore text-primary">Details...</a></p>
             </div>
           </div>
           <% } %>

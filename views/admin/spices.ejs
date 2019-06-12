@@ -54,7 +54,7 @@
                                                         <th>Name</th>
                                                         <th>Image</th>
                                                         <th>Description</th>
-                                                        <th>Blends</th>
+                                                        <th>Herb/Spice</th>
                                                         <th>Flavors</th>
                                                         <th>Ingredients</th>
                                                         <th>Regions</th>
@@ -71,11 +71,7 @@
                                                             <img src="/images/spices/<%= spices[i].image %>" alt="" style="width: 150px;">
                                                         </td>
                                                         <td><%= spices[i].description %></td>
-                                                        <td>
-                                                            <% for (var a = 0; a < spices[i].blends.length; a++) { %>
-                                                                <%= spices[i].blends[a].name %> ,
-                                                            <% } %>
-                                                        </td>
+                                                        <td><%= spices[i].type %></td>
                                                         <td>
                                                             <% for (var a = 0; a < spices[i].flavors.length; a++) { %>
                                                                 <%= spices[i].flavors[a].name %> ,

@@ -48,3 +48,9 @@ module.exports.index_get = async (req, res, next) => {
   const spices = await spicesQuery.sort({name: 'asc'}).exec();
   res.render('index', {spices, blends, flavors, ingredients, regions, query: req.query, allspices});
 };
+
+module.exports.details_get = async (req, res, next) => {
+  const spiceid = req.params.spiceid;
+  const spice = await Spice.findById(spiceid);
+  res.render('details', {spice});
+}

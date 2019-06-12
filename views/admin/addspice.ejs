@@ -82,14 +82,13 @@
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="blends" class="form-control-label">Blends</label>
+                                                    <label for="type"
+                                                        class=" form-control-label">Type</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <select class="ui fluid search dropdown" multiple="" name="blends" id="blends">
-                                                        <option value="">Blends</option>
-                                                        <% for (var i = 0; i < blends.length; i++) { %>
-                                                            <option value="<%= blends[i]._id %>"><%= blends[i].name %></option>
-                                                        <% } %>
+                                                    <select name="type" id="type" class="form-control">
+                                                        <option value="Herb">Herb</option>
+                                                        <option value="Spice" selected>Spice</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -137,8 +136,8 @@
                                             <button type="submit" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-dot-circle-o"></i> Save
                                             </button>
-                                            <button type="reset" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-ban"></i> Reset
+                                            <button type="reset" class="btn btn-danger btn-sm btn-cancel">
+                                                <i class="fa fa-ban"></i> Cancel
                                             </button>
                                         </div>
                                     </form>
