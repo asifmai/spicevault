@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include partials/commonhead %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/tooltipster.bundle.min.css" />
+  <link rel="stylesheet" href="/stylesheets/details.css">
+</head>
+
+<body>
+  <div class="body-wrapper">
+    <!-- Top Section Starts -->
+    <div class="container">
+      <!-- Title Row -->
+      <div class="row">
+        <div class="col">
+          <div class="page-header">
+            <a href="/">
+              <h1>Spice Vault</h1>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Title Row Ends -->
+    </div>
+    <!-- Top Section Ends -->
+    
+    <section id="details-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <h2 class="spice-name">
+              <%= blend.name %>
+              <span class="spice-type">(Blend)</span>
+            </h2>
+            <p class="para spice-description"><%= blend.description %></p>
+            <h3 class="spice-filters-heading">Comprise Of</h3>
+            <p class="para spice-filters-para">
+                <span class="filter-subheading">Spices:</span> 
+                <% for (var i = 0; i < blend.spices.length; i++) { %>
+                  <span class="filter-subtext " title="<%= blend.spices[i].description %>">
+                    <%= blend.spices[i].name %>
+                  </span>
+                <% } %>
+              </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </div>
+  <% include partials/commonscripts %>
+  <script type="text/javascript" src="/javascripts/tooltipster.bundle.min.js"></script>
+  <script src="/javascripts/details.js"></script>
+</body>
+
+</html>

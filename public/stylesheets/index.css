@@ -1,26 +1,12 @@
-.page-header h1 {
-  text-align: center;
-  margin-top: 0.5em;
-  font-size: 2.5em;
-  font-weight: 600;
+button.dropdown-toggle {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-color: #ced4da;
 }
 
-.ui.search {
-  max-width: 350px;
-  width: 90%;
-  margin: 0.5em auto;
-}
-
-.ui.search .ui.icon.input {
-  width: 100%;
-}
-
-.ui.search .results {
-  width: 100%;
-}
-
-.ui.search .results .result .content .title {
-  text-align: left !important;
+input.searchbox {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .filters__wrapper {

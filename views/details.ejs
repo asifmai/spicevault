@@ -37,11 +37,11 @@
               <span class="spice-type">(<%= spice.type %>)</span>
             </h2>
             <p class="para spice-description"><%= spice.description %></p>
-            <h3 class="spice-filters-heading">Filters</h3>
+            <h3 class="spice-filters-heading">Categories</h3>
             <p class="para spice-filters-para">
               <span class="filter-subheading">Flavors:</span> 
               <% for (var i = 0; i < spice.flavors.length; i++) { %>
-                <span class="filter-subtext tooltips" title="<%= spice.flavors[i].description %>">
+                <span class="filter-subtext " title="<%= spice.flavors[i].description %>">
                   <%= spice.flavors[i].name %>
                   <%= (i == spice.flavors.length - 1) ? '' : ',' %>
                 </span>
@@ -50,7 +50,7 @@
             <p class="para spice-filters-para">
               <span class="filter-subheading">Ingredients:</span> 
               <% for (var i = 0; i < spice.ingredients.length; i++) { %>
-                <span class="filter-subtext tooltips" title="<%= spice.ingredients[i].description %>">
+                <span class="filter-subtext " title="<%= spice.ingredients[i].description %>">
                   <%= spice.ingredients[i].name %>
                   <%= (i == spice.ingredients.length - 1) ? '' : ',' %>
                 </span>
@@ -59,7 +59,7 @@
             <p class="para spice-filters-para">
               <span class="filter-subheading">Regions:</span> 
               <% for (var i = 0; i < spice.regions.length; i++) { %>
-                <span class="filter-subtext tooltips" title="<%= spice.regions[i].description %>">
+                <span class="filter-subtext " title="<%= spice.regions[i].description %>">
                   <%= spice.regions[i].name %>
                   <%= (i == spice.regions.length - 1) ? '' : ',' %>
                 </span>
@@ -70,7 +70,7 @@
                 <span class="filter-subheading">Blends:</span> 
                 <% for (var i = 0; i < blends.length; i++) { %>
                   <% if (blends[i].spices.includes(spice._id)) { %>
-                  <span class="filter-subtext tooltips" title="<%= blends[i].description %>">
+                  <span class="filter-subtext " title="<%= blends[i].description %>">
                     <%= blends[i].name %>
                   </span>
                   <% } %>

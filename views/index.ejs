@@ -26,31 +26,27 @@
       <form action="/" method="GET">
         <!-- Search Row -->
         <div class="row">
-          <div class="col text-center">
-              <div class="ui search">
-                <div class="ui icon input">
-                  <input class="prompt" type="text" placeholder="Search for Herbs and Spices..." name="searchtext" value="<%= query.searchtext ? query.searchtext : ''%>">
-                  <i class="search icon"></i>
+          <div class="col-md-5 mx-auto mt-2">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Spices/Herbs</button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item active spices" href="#">Spices/Herbs</a>
+                    <a class="dropdown-item blends" href="#">Blends</a>
+                  </div>
                 </div>
-                <div class="results"></div>
+                <input type="text" class="form-control searchbox" aria-label="Text input with dropdown button" placeholder="Search" name="searchtext" value="<%= query.searchtext ? query.searchtext : ''%>">
               </div>
+              <input type="text" name="spiceblend" class="spiceblendinput d-none" value="spices">
           </div>
         </div>
         <!-- Search Row Ends -->
 
         <!-- Filters Row -->
+        <% if (query.spiceblend === 'spices') { %>
         <div class="row">
           <div class="col">
             <div class="filters__wrapper">
-              <!-- <div class="filter__container">
-                <span class="filter__label">Blends</span>
-                <select class="ui fluid search dropdown filter__select__blends" multiple="" name="blends">
-                  <option value="">All Blends</option>
-                  <% for (var i = 0; i < blends.length; i++) { %>
-                    <option value="<%= blends[i]._id %>"><%= blends[i].name %></option>
-                  <% } %>
-                </select>
-              </div> -->
               <div class="filter__container">
                 <span class="filter__label">Flavors</span>
                 <select class="ui fluid search dropdown filter__select__flavors" multiple="" name="flavors">
@@ -81,12 +77,13 @@
             </div>
           </div>
         </div>
+        <% } %>
         <!-- Filters Row Ends -->
 
         <!-- Buttons Row -->
         <div class="row mt-2">
           <div class="col text-right">
-            <button class="btn btn-primary btn-sm" type="submit">Apply</button>
+            <button class="btn btn-primary btn-sm btn-apply" type="submit">Apply</button>
             <button class="btn btn-secondary btn-sm btn-cancel">Reset</button>
           </div>
         </div>
@@ -99,6 +96,7 @@
     <section id="glossary-section">
       <div class="container">
         <div class="glossary__wrapper">
+          <% if (query.spiceblend === 'spices') { %>
           <% for (var i = 0; i < spices.length; i++) { %>
           <div class="glossary__item">
             <div class="glossary__heading">
@@ -111,21 +109,42 @@
             </div>
           </div>
           <% } %>
+          <% } else { %>
+            <% for (var i = 0; i < blends.length; i++) { %>
+              <div class="glossary__item">
+                <div class="glossary__heading">
+                  <a href="/blenddetails/<%= blends[i]._id %>" class="text-dark">
+                    <%= blends[i].name %>
+                  </a>
+                </div>
+                <div class="glossary__content">
+                  <p class="text"><%= blends[i].description %><a href="/blenddetails/<%= blends[i]._id %>" class="readmore text-primary">Details...</a></p>
+                </div>
+              </div>
+              <% } %>
+          <% } %> 
         </div>
       </div>
     </section>
     <!-- Glossary Section Ends -->
   </div>
   <% include partials/commonscripts %>
+  <% if (query.spiceblend === 'spices') { %>
   <script>
-    var spices = eval(<%- JSON.stringify(spices) %>)
-    var blends = eval(<%- JSON.stringify(blends) %>)
-    var flavors = eval(<%- JSON.stringify(flavors) %>)
-    var ingredients = eval(<%- JSON.stringify(ingredients) %>)
-    var regions = eval(<%- JSON.stringify(regions) %>)
-    var query = eval(<%- JSON.stringify(query) %>)
-    var allspices = eval(<%- JSON.stringify(allspices) %>)
+      var blends = eval(<%- JSON.stringify(blends) %>)
+      var query = eval(<%- JSON.stringify(query) %>)
+      var spices = eval(<%- JSON.stringify(spices) %>)
+      var flavors = eval(<%- JSON.stringify(flavors) %>)
+      var ingredients = eval(<%- JSON.stringify(ingredients) %>)
+      var regions = eval(<%- JSON.stringify(regions) %>)
+      var allspices = eval(<%- JSON.stringify(allspices) %>)
   </script>
+  <% } else { %>
+    <script>
+      var blends = eval(<%- JSON.stringify(blends) %>)
+      var query = eval(<%- JSON.stringify(query) %>)  
+    </script>
+  <% } %>
   <script src="/javascripts/index.js"></script>
 </body>
 
