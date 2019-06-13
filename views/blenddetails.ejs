@@ -31,15 +31,15 @@
           <div class="col-md-8">
             <h2 class="spice-name">
               <%= blend.name %>
-              <span class="spice-type">(Blend)</span>
+              <span class="spice-type txt-green">(Blend)</span>
             </h2>
             <p class="para spice-description"><%= blend.description %></p>
-            <h3 class="spice-filters-heading">Comprise Of</h3>
+            <h3 class="spice-filters-heading">Comprised Of</h3>
             <p class="para spice-filters-para">
                 <span class="filter-subheading">Spices:</span> 
                 <% for (var i = 0; i < blend.spices.length; i++) { %>
                   <span class="filter-subtext " title="<%= blend.spices[i].description %>">
-                    <a href="/details/<%= blend.spices[i]._id %>">
+                    <a href="/details/<%= blend.spices[i]._id %>" class="txt-green">
                       <%= blend.spices[i].name %>
                     </a>
                   </span>

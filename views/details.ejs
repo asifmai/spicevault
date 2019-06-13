@@ -70,9 +70,11 @@
                 <span class="filter-subheading">Blends:</span> 
                 <% for (var i = 0; i < blends.length; i++) { %>
                   <% if (blends[i].spices.includes(spice._id)) { %>
-                  <span class="filter-subtext " title="<%= blends[i].description %>">
-                    <%= blends[i].name %>
-                  </span>
+                  <a href="/blenddetails/<%= blends[i]._id %>" class="txt-green">
+                    <span class="filter-subtext " title="<%= blends[i].description %>">
+                      <%= blends[i].name %>
+                    </span>
+                  </a>
                   <% } %>
                 <% } %>
               </p>

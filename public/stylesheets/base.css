@@ -46,3 +46,21 @@ body {
 .btn-outline-secondary.focus, .btn-outline-secondary:focus {
   box-shadow: none;
 }
+
+.txt-green {
+  color: #32593a;
+}
+
+a.txt-green:hover {
+  color: #3861407d;
+}
+
+button.txt-green {
+  background: #32593a;
+  color: white;
+}
+
+button.txt-green:hover {
+  background: #3861407d;
+  color: white;
+}
