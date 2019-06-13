@@ -39,7 +39,9 @@
                 <span class="filter-subheading">Spices:</span> 
                 <% for (var i = 0; i < blend.spices.length; i++) { %>
                   <span class="filter-subtext " title="<%= blend.spices[i].description %>">
-                    <%= blend.spices[i].name %>
+                    <a href="/details/<%= blend.spices[i]._id %>">
+                      <%= blend.spices[i].name %>
+                    </a>
                   </span>
                 <% } %>
               </p>
