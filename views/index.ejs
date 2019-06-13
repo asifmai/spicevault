@@ -43,7 +43,7 @@
         <!-- Search Row Ends -->
 
         <!-- Filters Row -->
-        <% if (query.spiceblend === 'spices') { %>
+        <% if (query.spiceblend === 'spices' || !query.spiceblend) { %>
         <div class="row">
           <div class="col">
             <div class="filters__wrapper">
@@ -96,7 +96,7 @@
     <section id="glossary-section">
       <div class="container">
         <div class="glossary__wrapper">
-          <% if (query.spiceblend === 'spices') { %>
+          <% if (query.spiceblend === 'spices' || !query.spiceblend) { %>
           <% for (var i = 0; i < spices.length; i++) { %>
           <div class="glossary__item">
             <div class="glossary__heading">
@@ -129,7 +129,7 @@
     <!-- Glossary Section Ends -->
   </div>
   <% include partials/commonscripts %>
-  <% if (query.spiceblend === 'spices') { %>
+  <% if (query.spiceblend === 'spices' || !query.spiceblend) { %>
   <script>
       var blends = eval(<%- JSON.stringify(blends) %>)
       var query = eval(<%- JSON.stringify(query) %>)
